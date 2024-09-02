@@ -1,11 +1,12 @@
-use std::error::Error;
-use serde::{Serialize, Deserialize};
 use oxtapus::tsetmc;
+use std::error::Error;
+use std::time::Instant;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    // let data = tsetmc::tse_option_mw().await?;
-    let data = tsetmc::mw().await?;
-    println!("{:#?}", data);
+    let start = Instant::now();
+    let data = tsetmc::history().await?;
+    println!("{:#?}", data.records[0]);
+    println!("{:?}", start.elapsed());
     Ok(())
 }

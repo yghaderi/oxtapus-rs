@@ -1,4 +1,8 @@
-use serde::{Deserialize, Serialize};
+use chrono::NaiveDate;
+use serde::de::{self, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use std::fmt;
+
 #[derive(Serialize, Deserialize, Debug)]
 struct OptionMarketWatchRow {
     #[serde(alias = "insCode_P")]
@@ -87,7 +91,7 @@ pub struct OptionMarketWatch {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct OrderBook{
+struct OrderBook {
     #[serde(alias = "n")]
     quote: f64,
     #[serde(alias = "zmd")]
@@ -104,7 +108,7 @@ struct OrderBook{
     ask_count: f64,
 }
 #[derive(Serialize, Deserialize, Debug)]
-pub struct MarketWatchRow{
+pub struct MarketWatchRow {
     #[serde(alias = "blDs")]
     order_book: Vec<OrderBook>,
     eps: f64,
@@ -115,26 +119,26 @@ pub struct MarketWatchRow{
     #[serde(alias = "insID")]
     ins_id: String,
     #[serde(alias = "lva")]
-    symbol:String,
+    symbol: String,
     #[serde(alias = "lvc")]
-    name:String,
+    name: String,
     #[serde(alias = "pMax")]
     max_price: f64,
     #[serde(alias = "pMin")]
     min_price: f64,
     #[serde(alias = "pcl")]
-    final_:f64,
+    final_: f64,
     #[serde(alias = "pdv")]
-    close:f64,
+    close: f64,
     pe: Option<String>,
     #[serde(alias = "pf")]
     open: f64,
     #[serde(alias = "pmn")]
-    low:f64,
+    low: f64,
     #[serde(alias = "pmx")]
     high: f64,
     #[serde(alias = "py")]
-    y_final:f64,
+    y_final: f64,
     #[serde(alias = "qtc")]
     traded_val: f64,
     #[serde(alias = "qtj")]
@@ -142,7 +146,65 @@ pub struct MarketWatchRow{
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct MarketWatch{
+pub struct MarketWatch {
     #[serde(alias = "marketwatch")]
-    records: Vec<MarketWatchRow>
+    records: Vec<MarketWatchRow>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct HistoryRecord {
+    #[serde(alias = "dEven", deserialize_with = "deserialize_date")]
+    date: NaiveDate,
+    #[serde(alias = "insCode")]
+    ins_code: String,
+    #[serde(alias = "priceFirst")]
+    open: f64,
+    #[serde(alias = "priceMax")]
+    high: f64,
+    #[serde(alias = "priceMin")]
+    low: f64,
+    #[serde(alias = "pDrCotVal")]
+    close: f64,
+    #[serde(alias = "pClosing")]
+    final_: f64,
+    #[serde(alias = "priceYesterday")]
+    y_final: f64,
+    #[serde(alias = "qTotTran5J")]
+    volume: f64,
+    #[serde(alias = "qTotCap")]
+    value: f64,
+    #[serde(alias = "zTotTran")]
+    trade_count: f64,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct History {
+    #[serde(alias = "closingPriceDaily")]
+    pub records: Vec<HistoryRecord>,
+}
+
+fn deserialize_date<'de, D>(deserializer: D) -> Result<NaiveDate, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    struct DateVisitor;
+
+    impl<'de> Visitor<'de> for DateVisitor {
+        type Value = NaiveDate;
+
+        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+            formatter.write_str("an integer or string representing a date in the format YYYYMMDD")
+        }
+
+        fn visit_u64<E>(self, value: u64) -> Result<NaiveDate, E>
+        where
+            E: de::Error,
+        {
+            let date_str = format!("{:08}", value);
+            NaiveDate::parse_from_str(&date_str, "%Y%m%d")
+                .map_err(|_| E::custom(format!("invalid date format: {}", date_str)))
+        }
+    }
+
+    deserializer.deserialize_any(DateVisitor)
 }
