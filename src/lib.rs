@@ -20,9 +20,9 @@ pub mod tsetmc {
         let r = get::<OptionMarketWatch>(&url(endpoint)).await?;
         Ok(r)
     }
-    pub async fn history() -> Result<History, Box<dyn Error>> {
-        let endpoint = "/ClosingPrice/GetClosingPriceDailyList/46348559193224090/0";
-        let r = get::<History>(&url(endpoint)).await?;
+    pub async fn history(ins_code: String) -> Result<History, Box<dyn Error>> {
+        let endpoint = format!("/ClosingPrice/GetClosingPriceDailyList/{ins_code}/0");
+        let r = get::<History>(&url(&endpoint)).await?;
         Ok(r)
     }
 }
