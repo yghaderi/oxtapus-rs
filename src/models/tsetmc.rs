@@ -4,7 +4,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use std::fmt;
 
 #[derive(Serialize, Deserialize, Debug)]
-struct OptionMarketWatchRow {
+pub struct OptionMarketWatchRow {
     #[serde(alias = "insCode_P")]
     ins_code_p: String,
     #[serde(alias = "insCode_C")]
@@ -87,7 +87,7 @@ struct OptionMarketWatchRow {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct OptionMarketWatch {
     #[serde(alias = "instrumentOptMarketWatch")]
-    records: Vec<OptionMarketWatchRow>,
+    pub records: Vec<OptionMarketWatchRow>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -148,7 +148,7 @@ pub struct MarketWatchRow {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct MarketWatch {
     #[serde(alias = "marketwatch")]
-    records: Vec<MarketWatchRow>,
+    pub records: Vec<MarketWatchRow>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
