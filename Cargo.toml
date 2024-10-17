@@ -2,6 +2,11 @@
 name = "oxtapus"
 version = "0.1.1"
 edition = "2021"
+authors = ["Yagoub <ghaderi.yaghoub@gmail.com>"]
+repository = "https://github.com/yghaderi/oxtapus-rs.git"
+license = "MIT"
+license-file = "LICENSE.txt"
+description = "اُختاپوس برایِ پوششِ بخشی از داده‌هایِ موردِ نیاز در مدل-سازی‌هایِ مالی-اقتصادی توسعه داده شده است."
 
 [dependencies]
 reqwest = { version = "0.12.7", features = [
