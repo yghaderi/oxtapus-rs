@@ -3,7 +3,7 @@ use serde::de::{self, Visitor};
 use serde::{Deserialize, Deserializer, Serialize};
 use std::fmt;
 
-#[derive(Serialize, Deserialize, Debug, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OptionMarketWatchRow {
     #[serde(alias = "insCode_P")]
     ins_code_p: String,
@@ -84,13 +84,13 @@ pub struct OptionMarketWatchRow {
     #[serde(alias = "qTitMeOf_C")]
     ask_vol_c: f64,
 }
-#[derive(Serialize, Deserialize, Debug, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct OptionMarketWatch {
     #[serde(alias = "instrumentOptMarketWatch")]
     pub records: Vec<OptionMarketWatchRow>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 struct OrderBook {
     #[serde(alias = "n")]
     quote: f64,
@@ -107,7 +107,7 @@ struct OrderBook {
     #[serde(alias = "zmo")]
     ask_count: f64,
 }
-#[derive(Serialize, Deserialize, Debug, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MarketWatchRow {
     #[serde(alias = "blDs")]
     order_book: Vec<OrderBook>,
@@ -145,13 +145,13 @@ pub struct MarketWatchRow {
     traded_vol: f64,
 }
 
-#[derive(Serialize, Deserialize, Debug, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct MarketWatch {
     #[serde(alias = "marketwatch")]
     pub records: Vec<MarketWatchRow>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct HistoryRecord {
     #[serde(alias = "dEven", deserialize_with = "deserialize_date")]
     date: NaiveDate,
@@ -177,7 +177,7 @@ pub struct HistoryRecord {
     trade_count: f64,
 }
 
-#[derive(Serialize, Deserialize, Debug, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct History {
     #[serde(alias = "closingPriceDaily")]
     pub records: Vec<HistoryRecord>,
