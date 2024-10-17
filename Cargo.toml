@@ -9,7 +9,7 @@ license-file = "LICENSE.txt"
 description = "اُختاپوس برایِ پوششِ بخشی از داده‌هایِ موردِ نیاز در مدل-سازی‌هایِ مالی-اقتصادی توسعه داده شده است."
 
 [dependencies]
-reqwest = { version = "0.12.7", features = [
+reqwest = { version = "0.12.8", features = [
     "json",
     "rustls-tls",
     "blocking",
