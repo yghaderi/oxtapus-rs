@@ -1,6 +1,6 @@
 [package]
 name = "oxtapus"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 authors = ["Yagoub <ghaderi.yaghoub@gmail.com>"]
 repository = "https://github.com/yghaderi/oxtapus-rs.git"

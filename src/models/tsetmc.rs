@@ -4,6 +4,7 @@ use serde::{Deserialize, Deserializer, Serialize};
 use std::fmt;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct OptionMarketWatchRow {
     #[serde(alias = "insCode_P")]
     pub ins_code_p: String,
@@ -85,12 +86,14 @@ pub struct OptionMarketWatchRow {
     pub ask_vol_c: f64,
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct OptionMarketWatch {
     #[serde(alias = "instrumentOptMarketWatch")]
     pub records: Vec<OptionMarketWatchRow>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 struct OrderBook {
     #[serde(alias = "n")]
     pub quote: f64,
@@ -108,6 +111,7 @@ struct OrderBook {
     pub ask_count: f64,
 }
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct MarketWatchRow {
     #[serde(alias = "blDs")]
     pub order_book: Vec<OrderBook>,
@@ -146,12 +150,14 @@ pub struct MarketWatchRow {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct MarketWatch {
     #[serde(alias = "marketwatch")]
     pub records: Vec<MarketWatchRow>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct HistoryRecord {
     #[serde(alias = "dEven", deserialize_with = "deserialize_date")]
     pub date: NaiveDate,
@@ -178,6 +184,7 @@ pub struct HistoryRecord {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct History {
     #[serde(alias = "closingPriceDaily")]
     pub records: Vec<HistoryRecord>,
