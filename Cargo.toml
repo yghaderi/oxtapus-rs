@@ -4,8 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-reqwest = { version = "0.12.7", features = ["json", "rustls-tls", "blocking"] }
+reqwest = { version = "0.12.7", features = ["json", "rustls-tls", "blocking", "gzip"] }
 tokio = { version = "1.38.0", features = ["full"] }
 serde = { version = "1.0.203", features = ["derive"] }
 serde_json = "1.0"
 chrono = { version = "0.4.38", features = ["serde"] }
+thiserror = "2.0.18"
